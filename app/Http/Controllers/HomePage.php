@@ -7,14 +7,16 @@ use App\Models\Image;
 use App\Models\SiteSetting;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Town;
 use Illuminate\Support\Facades\Cookie;
-use Request;
+use Illuminate\Http\Request;
 
 class HomePage extends Controller
 {
     public function index()
     {
         $data["categories"] = Category::all();
+        $data['towns'] = Town::orderBy('town_name','asc')->get();
         $data["sitesettings"] = SiteSetting::find(1);
         $data["featuredproducts"] = Product::orderBy('views', 'desc')->limit(5)->get();
         $categoriesCount = array();
@@ -56,6 +58,19 @@ class HomePage extends Controller
     public function products()
     {
         $data["sitesettings"] = SiteSetting::find(1);
+        $data["products"] = Product::inRandomOrder()->paginate(9);
+        $productImages = array();
+        foreach ($data['products'] as $product) {
+            array_push($productImages, Image::where('product_id', $product->id)->first());
+        }
+        $data["productImages"] = $productImages;
+
+        return view('frontend.products', $data);
+    }
+    public function search(Request $request)
+    {
+        $data["sitesettings"] = SiteSetting::find(1);
+        print_r($request->post());
         $data["products"] = Product::inRandomOrder()->paginate(9);
         $productImages = array();
         foreach ($data['products'] as $product) {

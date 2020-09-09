@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <title>{{$sitesettings->site_name}}</title>
     <meta charset="utf-8">
@@ -13,6 +14,7 @@
     <link rel="stylesheet" href="{{asset('frontend/')}}/css/jquery-ui.css">
     <link rel="stylesheet" href="{{asset('frontend/')}}/css/owl.carousel.min.css">
     <link rel="stylesheet" href="{{asset('frontend/')}}/css/owl.theme.default.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="{{asset('frontend/')}}/css/bootstrap-datepicker.css">
 

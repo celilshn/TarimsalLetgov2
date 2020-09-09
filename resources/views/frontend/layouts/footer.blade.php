@@ -66,8 +66,12 @@
 <script src="{{asset('frontend/')}}/js/bootstrap-datepicker.min.js"></script>
 <script src="{{asset('frontend/')}}/js/aos.js"></script>
 <script src="{{asset('frontend/')}}/js/rangeslider.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <script src="{{asset('frontend/')}}/js/main.js"></script>
-
+<script>
+    $(document).ready(function () {
+        $('#products').select2();
+    })
+</script>
 </body>
 </html>
