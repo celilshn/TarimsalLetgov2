@@ -12,13 +12,13 @@ class UserSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        for($i=0;$i<100;$i++){
+        for($i=1;$i<101;$i++){
             $username = $faker->userName;
         \Illuminate\Support\Facades\DB::table('users')->insert(
             [
-                'username' =>$username,
+                'id'=>$i,
                 'name' =>$faker->name,
-                'password' =>$faker->password,
+                'password' =>\Illuminate\Support\Facades\Hash::make('123abc123'),
                 'email' =>$faker->email,
                 'phone' =>$faker->phoneNumber,
                 'city' =>$faker->city,

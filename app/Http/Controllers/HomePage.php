@@ -13,10 +13,22 @@ use Illuminate\Http\Request;
 
 class HomePage extends Controller
 {
+    public function login()
+    {
+        $data["sitesettings"] = SiteSetting::find(1);
+        return view('frontend.login', $data);
+    }
+
+    public function register()
+    {
+        $data["sitesettings"] = SiteSetting::find(1);
+        return view('frontend.register', $data);
+    }
+
     public function index()
     {
         $data["categories"] = Category::all();
-        $data['towns'] = Town::orderBy('town_name','asc')->get();
+        $data['towns'] = Town::orderBy('town_name', 'asc')->get();
         $data["sitesettings"] = SiteSetting::find(1);
         $data["featuredproducts"] = Product::orderBy('views', 'desc')->limit(5)->get();
         $categoriesCount = array();
@@ -67,18 +79,59 @@ class HomePage extends Controller
 
         return view('frontend.products', $data);
     }
+    public function about()
+    {
+        $data["sitesettings"] = SiteSetting::find(1);
+
+//        Artisan::call('db:seed', ["--force" => true ]);
+
+        return view('frontend.about', $data);
+    }
+
     public function search(Request $request)
     {
         $data["sitesettings"] = SiteSetting::find(1);
-        print_r($request->post());
-        $data["products"] = Product::inRandomOrder()->paginate(9);
+        $key = $request->key;
+        $town_id = $request->p_id;
+        $category_id = $request->category_id;
+        //Validation
+        if (empty($category_id) && empty($town_id)) {
+            $data["products"] = Product::where('name', 'LIKE', '%' . $key . '%')->paginate(9);
+            $searchvalues = ['category' => 'Tüm Kategoriler', 'town' => 'Tüm Şehirler'];
+        } else if (empty($category_id) && !empty($town_id)) {
+            $town = Town::find($town_id);
+            $city_id = $town->getCity->id;
+            if ($town->getCity->city_name != $town->town_name) {
+                $data["products"] = Product::where('name', 'LIKE', '%' . $key . '%')->where('town_id', $town_id)->paginate(9);
+                $searchvalues = ['category' => 'Tüm Kategoriler', 'town' => $town->town_name . ' ' . $town->getCity->city_name];
+            } else {
+                $data["products"] = Product::select('products.*')->where('name', 'LIKE', '%' . $key . '%')
+                    ->join('towns', 'towns.id', '=', 'products.town_id')->
+                    where('city_id', $city_id)->paginate(9);
+                $searchvalues = ['category' => 'Tüm Kategoriler', 'town' => $town->getCity->city_name];
+            }
+        } else if (!empty($category_id) && empty($town_id)) {
+            $data["products"] = Product::where('name', 'LIKE', '%' . $key . '%')->where('category_id', $category_id)->paginate(9);
+            $searchvalues = ['category' => Category::find($category_id)->name, 'town' => 'Tüm Şehirler'];
+
+        } else {
+            $town = Town::find($town_id);
+            $city_id = $town->getCity->id;
+            $data["products"] = Product::select('products.*')->where('name', 'LIKE', '%' . $key . '%')->where('category_id', $category_id)
+                ->join('towns', 'towns.id', '=', 'products.town_id')->
+                where('city_id', $city_id)->paginate(9);
+            $searchvalues = ['category' => Category::find($category_id)->name, 'town' => $town->town_name . ' ' . $town->getCity->city_name];
+
+        }
+        //Validation
         $productImages = array();
         foreach ($data['products'] as $product) {
-            array_push($productImages, Image::where('product_id', $product->id)->first());
+            array_push($productImages, Image::where('product_id', $product->id)->skip(1)->first());
         }
         $data["productImages"] = $productImages;
+        $data["searchvalues"] = $searchvalues;
 
-        return view('frontend.products', $data);
+        return view('frontend.search-products', $data);
     }
 
 }

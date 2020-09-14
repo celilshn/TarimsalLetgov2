@@ -15,16 +15,17 @@ class Users extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('username');
-            $table->string('name');
+            $table->string('name')->default('');
             $table->string('password');
             $table->string('email');
-            $table->string('phone');
-            $table->string('city');
-            $table->string('town');
+            $table->string('phone')->default('');
+            $table->string('city')->default('');
+            $table->string('town')->default('');
             $table->string('userImage')->default('img');
-            $table->dateTime('lastLoginDate');
+            $table->dateTime('lastLoginDate')->default(now());
+            $table->rememberToken()->default('');
             $table->timestamps();
+            $table->unique('email');
         });
     }
 

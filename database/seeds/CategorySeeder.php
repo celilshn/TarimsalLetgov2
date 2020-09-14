@@ -24,14 +24,25 @@ class CategorySeeder extends Seeder
             'Traktör',
             'Hayvancılık',
             'İşlenmiş Ürünler'];
+        $links = [
+            'sebze.png',
+            'meyve.png',
+            'fidanclk.png',
+            'hububat.png',
+            'gbre.png',
+            'ekiman.png',
+            'peyzaj.png',
+            'traktr.png',
+            'hayvanclk.png',
+            'islenmis.png',
+        ];
 
-foreach ($categories as $category):
-$categoryObject = new \App\Category();
-$categoryObject->name = $category;
-$categoryObject->image ='https://loremflickr.com/100/100/dog';
-$categoryObject->slug = Str::slug($category,'-');
-$categoryObject->save();
-
-endforeach;
-}
+        for ($i = 0; $i < count($categories); $i++) {
+            $categoryObject = new \App\Models\Category();
+            $categoryObject->name = $categories[$i];
+            $categoryObject->image = $links[$i];
+            $categoryObject->slug = Str::slug($categories[$i], '-');
+            $categoryObject->save();
+        }
+    }
 }

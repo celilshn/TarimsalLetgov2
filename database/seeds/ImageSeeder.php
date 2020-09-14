@@ -13,7 +13,7 @@ class ImageSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        for ($i = 0; $i < 99; $i++) {
+        for ($i = 1; $i < 101; $i++) {
             for ($j = 0; $j< 4; $j++) {
                 \Illuminate\Support\Facades\DB::table('images')->insert([
                     'product_id'=>$i,

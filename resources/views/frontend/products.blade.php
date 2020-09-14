@@ -11,8 +11,8 @@
 
                     <div class="row justify-content-center mt-5">
                         <div class="col-md-8 text-center">
-                            <h1>Ads Listings</h1>
-                            <p class="mb-0">Choose product you want</p>
+                            <h1>Reklam Listeleri</h1>
+                            <p class="mb-0">İstediğiniz ürünü seçin</p>
                         </div>
                     </div>
 
@@ -39,8 +39,7 @@
                                     <div class="lh-content">
                                         <span class="category">{{$product->getCategory->name}}</span>
                                         <h3><a href="#">{{$product->name}}</a></h3>
-                                        <address>Locationk</address>
-                                        <p class="mb-0">
+                                        <address>{{$product->getTown->town_name}}, {{$product->getTown->getCity->city_name}}</address>                                        <p class="mb-0">
                                             <span class="review">{{$product->views}} Görüntüleme</span>
                                         </p>
                                     </div>

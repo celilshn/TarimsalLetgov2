@@ -12,8 +12,9 @@ class ProductSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        for($i=0;$i<99;$i++)
+        for($i=1;$i<101;$i++)
         {
+
             $name = $faker->sentence(3,true);
             \Illuminate\Support\Facades\DB::table('products')->insert([
                 'category_id'=>rand(1,10),
@@ -21,7 +22,7 @@ class ProductSeeder extends Seeder
                 'name'=>$name,
                 'slug'=>Str::slug($name,'-'),
                 'description'=>$faker->paragraph(3,true),
-            //    'images'=>$faker->imageUrl(400, 600, rand(1,250), true, 'Faker'),
+                'town_id'=>rand(1,1051),
                 'created_at'=>$faker->dateTime('now','Europe/Istanbul'),
                 'updated_at'=>now()
             ]);

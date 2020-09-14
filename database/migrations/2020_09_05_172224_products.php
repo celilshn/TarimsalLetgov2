@@ -23,7 +23,7 @@ class Products extends Migration
 //            $table->integer('commentCount');
             $table->integer('views')->default(0);
             //$table->integer('city_id');
-            //$table->integer('town_id');
+            $table->integer('town_id');
 
             $table->timestamps();
 

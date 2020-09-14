@@ -1,4 +1,17 @@
-<!DOCTYPE html>
+<style>
+    .select2-selection__rendered {
+        line-height: 45px !important;
+        text-align: left;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 45px !important;
+    }
+
+    .select2-selection__arrow {
+        height: 45px !important;
+    }
+</style><!DOCTYPE html>
 <html lang="tr">
 
 <head>
@@ -14,7 +27,7 @@
     <link rel="stylesheet" href="{{asset('frontend/')}}/css/jquery-ui.css">
     <link rel="stylesheet" href="{{asset('frontend/')}}/css/owl.carousel.min.css">
     <link rel="stylesheet" href="{{asset('frontend/')}}/css/owl.theme.default.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
 
     <link rel="stylesheet" href="{{asset('frontend/')}}/css/bootstrap-datepicker.css">
 
@@ -45,7 +58,8 @@
         <div class="row align-items-center">
 
             <div class="col-6 col-xl-2">
-                <h1 class="mb-0 site-logo"><a href="{{route('homepage')}}" class="text-black mb-0">Tarımsal<span class="text-primary">Pazarlama</span>  </a></h1>
+                <h1 class="mb-0 site-logo"><a href="{{route('homepage')}}" class="text-black mb-0">Tarımsal<span
+                            class="text-primary">Pazarlama</span> </a></h1>
             </div>
             <div class="col-12 col-md-10 d-none d-xl-block">
                 <nav class="site-navigation position-relative text-right" role="navigation">
@@ -54,13 +68,23 @@
                         <li class="active"><a href="{{route('homepage')}}">{{$sitesettings->site_tab_mainpage}}</a></li>
                         <li><a href="{{route('products')}}">{{$sitesettings->site_tab_ads}}</a></li>
                         <li>
-                            <a href="about.html">{{$sitesettings->site_tab_us}}</a>
+                            <a href="{{route('about')}}">{{$sitesettings->site_tab_us}}</a>
                         <li><a href="contact.html">{{$sitesettings->site_tab_contact}}</a></li>
 
-                        <li class="ml-xl-3 login"><a href="login.html"><span class="border-left pl-xl-4"></span>Giriş Yap</a></li>
-                        <li><a href="register.html">Kayıt</a></li>
+                        @guest
+                            <li class="ml-xl-3 login"><a href="{{route('login')}}"><span
+                                        class="border-left pl-xl-4"></span>Giriş Yap</a></li>
+                            <li><a href="{{route('register')}}">Kayıt</a></li>
+                        @endguest
 
-                        <li><a href="#" class="cta"><span class="bg-primary text-white rounded">+ Ilan Ekle</span></a></li>
+                        @auth
+                            <li><a href="">Profilim</a></li>
+                            <li class="ml-xl-3 login"><a href="{{route('logout')}}"><span
+                                        class="border-left pl-xl-4"></span>Çıkış Yap</a></li>
+                            <li><a href="#" class="cta"><span
+                                        class="bg-primary text-white rounded">+ Ilan Ekle</span></a></li>
+
+                        @endauth
                     </ul>
                 </nav>
             </div>

@@ -28,7 +28,8 @@
                                     <div class="select-wrap" style="">
                                         <span class="icon"><span class="icon-keyboard_arrow_down"></span></span>
 
-                                        <select class="form-control rounded" name="p_id" id="products" style="width: 100%;height: 100%">
+                                        <select class="form-control rounded " name="p_id" id="products" style="width: 100%;height: 100%">
+                                            <option value="">Tüm Şehirler</option>
                                             @foreach($towns as $town)
                                                 @if($town->town_name == $town->getCity->city_name)
                                                     <option value="{{$town->id}}">{{$town->town_name}} TÜMÜ</option>
@@ -45,7 +46,7 @@
                                 <div class="col-lg-12 mb-4 mb-xl-0 col-xl-3">
                                     <div class="select-wrap">
                                         <span class="icon"><span class="icon-keyboard_arrow_down"></span></span>
-                                        <select class="form-control rounded" name="" id="">
+                                        <select class="form-control rounded" name="category_id" id="">
                                             <option value="">Tüm Kategoriler</option>
                                             @foreach($categories as $category)
                                                 <option value="{{$category->id}}">{{$category->name}}</option>
@@ -74,7 +75,7 @@
                     @foreach($categories as $category)
                         <div class="col-sm-6 col-md-4 mb-4 mb-lg-0 col-lg-2">
                             <a href="#" class="popular-category h-100">
-                                <span class="icon"><img src="{{$category->image}}" width="50"
+                                <span class="icon"><img src="{{asset('frontend/images/')}}/{{$category->image}}" width="50"
                                                         height="50"> </span></span>
                                 <span class="caption mb-2 d-block">{{$category->name}}</span>
                                 <span class="number">{{$categoriesCount[$loop->index]}}</span>
@@ -100,9 +101,8 @@
                                    style="background-image: url('{{$featuredproductimage[$loop->index]->url}}');"></a>
                                 <div class="lh-content">
                                     <span class="category">{{$product->getCategory->name}}</span>
-                                    <a href="#" class="bookmark"><span class="icon-heart"></span></a>
                                     <h3><a href="listings-single.html">{{$product->name}}</a></h3>
-                                    <address>{{$product->city}}</address>
+                                    <span class="address"><address>{{$product->getTown->town_name}}, {{$product->getTown->getCity->city_name}}</address></span>
                                     <p class="mb-0">
                                         <span class="review">{{$product->views}} Görüntüleme</span>
                                     </p>
@@ -136,13 +136,11 @@
                                      style=" height: 200px">
                             </div>
                             <div class="listing-item-content">
-                                <a href="#" class="bookmark" data-toggle="tooltip" data-placement="left"
-                                   title="Bookmark"><span class="icon-heart"></span></a>
                                 <a class="px-3 mb-3 category" href="#">{{$product->getCategory->name}}</a>
                                 <h2 class="mb-1"><a href="{{route('single',[
                             'slug'=>$product->slug,
                             'id'=>$product->id])}}">{{$product->name}}</a></h2>
-                                <span class="address"></span>
+                                <span class="address"><address>{{$product->getTown->town_name}}, {{$product->getTown->getCity->city_name}}</address></span>
                             </div>
                         </div>
 

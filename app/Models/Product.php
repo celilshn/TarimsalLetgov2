@@ -17,4 +17,7 @@ class Product extends Model
     function getUser(){
         return $this->hasOne('App\Models\User','id','user_id');
     }
+    function getTown(){
+        return $this->hasOne('App\Models\Town','id','town_id');
+    }
 }
